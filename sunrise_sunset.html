@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sunrise and Sunset Page</title>
+</head>
+<body>
+	<h1>Sunrise and Sunset Times</h1>
+	<p style= "text-align:center";>Enter your location to see today's sunrise and sunset times:</p>
+	<form>
+		<label for="location">Location:</label>
+		<input type="text" id="location" placeholder="Please Enter City Name" name="location"><br><br>
+		<button type="button" onclick="getSunriseSunset()">Get Sunrise and Sunset Times</button>
+	</form>
+	<br>
+	<div id="result"></div>
+
+	<script>
+		function getSunriseSunset() {
+			var location = document.getElementById("location").value;
+			fetch(`https://api.sunrise-sunset.org/json?formatted=0&address=${location}`)
+				.then(response => response.json())
+				.then(data => {
+					var sunrise = new Date(data.results.sunrise);
+					var sunset = new Date(data.results.sunset);
+					document.getElementById("result").innerHTML = `Sunrise: ${sunrise.toLocaleTimeString()}<br>Sunset: ${sunset.toLocaleTimeString()}`;
+				})
+				.catch(error => {
+					console.error(error);
+					document.getElementById("result").innerHTML = "Error: Could not get sunrise and sunset times.";
+				});
+		}
+	</script>
+</body>
+</html>
+<style>
+	/* Set the background color and font styles for the page */
+body {
+  background-color: #f2f2f2;
+  font-family: Times New Roman;
+}
+
+/* Style the header and page title */
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #333;
+  margin-top: 2rem;
+}
+
+/* Style the form */
+form {
+  margin: 2rem auto;
+  width: 50%;
+  max-width: 500px;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Style the form label and input fields */
+label {
+  display: block;
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+}
+
+/* Style the form button */
+button[type="button"] {
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Style the result display */
+#result {
+  margin: 2rem auto;
+  width: 50%;
+  max-width: 500px;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  font-size: 1.2rem;
+  color: #333;
+}
+#location
+{
+box-shadow: 2px 2px 5px skyblue;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+}
+</style>
